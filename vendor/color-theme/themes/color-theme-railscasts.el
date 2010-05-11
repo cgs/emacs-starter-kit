@@ -15,7 +15,7 @@
   (interactive)
   (color-theme-install
    '(color-theme-railscasts
-     ((background-color . "#232323")
+     ((background-color . "#000000")
       (background-mode . dark)
       (cursor-color . "#5A647E")
       (foreground-color . "#E6E1DC"))
@@ -36,7 +36,7 @@
      (font-lock-variable-name-face ((t (:foreground "LightSteelBlue"))))
      (font-lock-warning-face ((t (:foreground "Pink"))))
      (paren-face-match-light ((t (:foreground "#FFC66D" :background "#555577"))))
-     (highlight ((t (:background "darkolivegreen"))))
+     (highlight ((t (:background "#232323"))))
      (italic ((t (:italic t))))
      (modeline ((t (:background "#A5BAF1" :foreground "black"))))
      (modeline-buffer-id ((t (:background "#A5BAF1" :foreground 
@@ -45,7 +45,7 @@
                                          "black"))))
      (modeline-mousable-minor-mode ((t (:background
                                         "#A5BAF1" :foreground "black"))))
-     (region ((t (:background "#555577"))))
+     (region ((t (:background "#222222"))))
      (primary-selection ((t (:background "#555577"))))
      (isearch ((t (:background "#555555"))))
      (zmacs-region ((t (:background "#555577")))) 
