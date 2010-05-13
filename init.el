@@ -73,4 +73,12 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
+(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+(server-start)
+
+;;textmate-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/textmate.el")
+(require 'textmate)
+(textmate-mode)
+
 ;;; init.el ends here
