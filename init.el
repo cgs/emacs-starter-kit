@@ -81,4 +81,9 @@
 (require 'textmate)
 (textmate-mode)
 
+;;yaml-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/yaml-mode.el")
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+
 ;;; init.el ends here
