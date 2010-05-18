@@ -76,6 +76,7 @@
 (push "/usr/local/bin" exec-path)
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
+(global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
 (server-start)
 
 ;;textmate-mode
