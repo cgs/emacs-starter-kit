@@ -74,6 +74,7 @@
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 (push "/usr/local/bin" exec-path)
+(set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (server-start)
 
