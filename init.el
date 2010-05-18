@@ -73,6 +73,7 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
+(push "/usr/local/bin" exec-path)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (server-start)
 
@@ -85,5 +86,14 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/yaml-mode.el")
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
+
+;;yasnippet
+(add-to-list 'load-path
+              "~/.emacs.d/vendor/yasnippet-0.6.1c")
+(require 'yasnippet) ;; not yasnippet-bundle
+(yas/initialize)
+(setq yas/root-directory '("~/.emacs.d/vendor/yasnippet-0.6.1c/snippets"
+                           "~/.emacs.d/snippets"))
+(mapc 'yas/load-directory yas/root-directory)
 
 ;;; init.el ends here
