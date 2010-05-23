@@ -77,6 +77,7 @@
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
+(global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
 (server-start)
 
 ;;textmate-mode
