@@ -75,6 +75,7 @@
 
 (push "/usr/local/bin" exec-path)
 (push "/bin" exec-path)
+(push "/usr/bin" exec-path)
 
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
