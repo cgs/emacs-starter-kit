@@ -102,4 +102,8 @@
                            "~/.emacs.d/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
 
+;;emacs-nav
+(add-to-list 'load-path "~/.emacs.d/vendor/emacs-nav")
+(require 'nav)
+
 ;;; init.el ends here
