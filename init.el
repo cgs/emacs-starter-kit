@@ -79,6 +79,7 @@
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
 (server-start)
+(global-auto-revert-mode 1)
 
 ;;textmate-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/textmate.el")
