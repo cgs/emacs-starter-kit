@@ -74,6 +74,9 @@
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 (push "/usr/local/bin" exec-path)
+(push "/bin" exec-path)
+(push "/usr/bin" exec-path)
+
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
@@ -99,5 +102,9 @@
 (setq yas/root-directory '("~/.emacs.d/vendor/yasnippet-0.6.1c/snippets"
                            "~/.emacs.d/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
+
+;;emacs-nav
+(add-to-list 'load-path "~/.emacs.d/vendor/emacs-nav")
+(require 'nav)
 
 ;;; init.el ends here
