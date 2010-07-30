@@ -81,6 +81,7 @@
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
+(global-set-key (kbd "<f5>") 'nav)
 (server-start)
 (global-auto-revert-mode 1)
 
@@ -106,5 +107,10 @@
 ;;emacs-nav
 (add-to-list 'load-path "~/.emacs.d/vendor/emacs-nav")
 (require 'nav)
+
+;;confluence.el
+(add-to-list 'load-path "~/.emacs.d/vendor/confluence")
+(require 'confluence)
+(setq confluence-url "http://confluence/rpc/xmlrpc")
 
 ;;; init.el ends here
