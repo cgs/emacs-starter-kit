@@ -113,6 +113,12 @@
 (require 'confluence)
 (setq confluence-url "http://confluence/rpc/xmlrpc")
 
+;;mercurial
+(add-to-list 'load-path "~/.emacs.d/vendor/mercurial")
+(require 'mercurial)
+
+;;minor mode for overriding bindings
+;;TODO: put all custom bindings here
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 (define-key my-keys-minor-mode-map [(super t)] 'find-tag)
 (define-minor-mode my-keys-minor-mode
