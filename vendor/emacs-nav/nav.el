@@ -3,7 +3,7 @@
 ;; Copyright 2009 Google Inc. All Rights Reserved.
 ;;
 ;; Author: issactrotts@google.com (Issac Trotts)
-;; Version: 20090823
+;; Version: 20090824b
 ;;
 
 ;;; License:
@@ -48,7 +48,6 @@
 (require 'cl)
 (require 'nav-bufs)
 (require 'nav-tags)
-(require 'nav-preview)
 
 (defconst nav-max-int 268435455)
 
@@ -207,7 +206,6 @@ This is used if only one window besides the Nav window is visible."
     (define-key keymap "t" 'nav-tags-expand)
     (define-key keymap "u" 'nav-go-up-one-dir)
     (define-key keymap "v" 'nav-view-file)
-    (define-key keymap "V" 'nav-toggle-preview)
     (define-key keymap "w" 'nav-shrink-wrap)
     (define-key keymap "W" 'nav-set-width-to-default)
     (define-key keymap "[" 'nav-rotate-windows-ccw)
@@ -235,8 +233,6 @@ This is used if only one window besides the Nav window is visible."
 ;; eval-buffer instead of restarting emacs or other junk after
 ;; changing the nav mode map.
 (setq nav-mode-map (nav-make-mode-map))
-
-(defvar nav-preview nil)
 
 (defvar nav-follow-timer nil
   "Timer used to update Nav's contents to reflect the directory
@@ -366,7 +362,7 @@ If DIRNAME is not a directory or is not accessible, returns nil."
 (defun nav-restore-cursor-line ()
   "Remembers what line we were on last time we visited this directory."
   (let ((line-num (nav-get-line-for-cur-dir)))
-    (goto-line (if line-num line-num 3))))
+    (goto-line (if line-num line-num 2))))
 
 
 (defun nav-open-file (filename)
@@ -486,16 +482,13 @@ This works like a web browser's back button."
         ;; in this let-block.
         (inhibit-read-only t))
     (erase-buffer)
-    (if should-make-filenames-clickable
-	(progn
-	  (nav-insert-text "Directory:" nav-face-heading)
-	  (insert "\n")))
+    (nav-insert-text "Directory:" nav-face-heading)
+    (insert "\n")
     (insert new-contents)
     (if should-make-filenames-clickable
-	(progn
-	  (nav-make-filenames-clickable)
-          (nav-colorize-filenames)
-	  (if nav-quickjump-show (nav-insert-jump-buttons))))
+        (nav-make-filenames-clickable))
+    (nav-colorize-filenames)
+    (if nav-quickjump-show (nav-insert-jump-buttons))
     (goto-line saved-line-number)))
 
 
@@ -791,17 +784,13 @@ http://muffinresearch.co.uk/archives/2007/01/30/bash-single-quotes-inside-of-sin
 (defun nav-quickfile-jump (quickfile-num)
   "Jumps to directory from custom bookmark list."
   (interactive)
-  (let* ((filename (nth quickfile-num nav-quickfile-list))
-	 (filename (substitute-in-file-name filename)))
-    (nav-open-file filename)))
+  (nav-open-file (nth quickfile-num nav-quickfile-list)))
 
 
 (defun nav-quickdir-jump (quickdir-num)
   "Jumps to directory from custom bookmark list."
   (interactive)
-  (let* ((dirname (nth quickdir-num nav-quickdir-list))
-	 (dirname (substitute-in-file-name dirname)))
-    (nav-push-dir dirname)))
+  (nav-push-dir (nth quickdir-num nav-quickdir-list)))
 
 
 (defun nav-jump-to-dir (dirname)
@@ -818,10 +807,7 @@ http://muffinresearch.co.uk/archives/2007/01/30/bash-single-quotes-inside-of-sin
 			      (if nav-follow 
 				  (format "%s" "F")
 				(format "%s" "-")) 
-			      (if nav-preview
-				  (format "%s" "P")
-				(format "%s" "-")) 
-			      " "
+			      "- "
 			      (if (string= mode "d")
 				  (propertize (concat (nav-dir-suffix (file-truename dir)) "/")
 					      'face 'modeline-buffer-id))
@@ -1112,20 +1098,6 @@ depending on the passed-in function next-i."
     (toggle-read-only 1)))
 
 
-(defun nav-toggle-preview ()
-  "Toggle nav preview mode."
-  (interactive)
-  (if (not nav-preview)
-      (progn
-        (nav-preview)
-	(setq nav-preview t)
-	(setq mode-line-format (nav-update-mode-line "d" default-directory)))
-    (progn
-      (nav-preview-stop)
-      (setq nav-preview nil)))
-  (nav-refresh))
-
-
 (defun nav-help-screen ()
   "Displays the help screen outside the Nav window."
   (interactive)
@@ -1193,7 +1165,6 @@ s\t Start a shell in an emacs window in the current directory.
 t\t Expand tags on selected file (or Shift-Left-Mouse).
 u\t Go up to parent directory.
 v\t View file in read-only mode. Press q to close file.
-V\t Toggle preview mode.
 w\t Shrink-wrap Nav's window to fit the longest filename in the current directory.
 W\t Set the window width to its default value.
 !\t Run shell command.
@@ -1201,6 +1172,7 @@ W\t Set the window width to its default value.
 ]\t Rotate non-nav windows clockwise.
 .\t Toggle hidden files.
 ?\t Show this help screen.
+
 
                 Press 'q' or click mouse to quit help
 
@@ -1278,7 +1250,7 @@ if it's already running."
 
 (define-key menu-bar-showhide-menu [Nav]
   '(menu-item "Nav" nav
-	      :help "Turn Nav on/off"))
+	      :help "Start/Stop Nav"))
 
 
 (provide 'nav)
