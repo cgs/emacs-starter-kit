@@ -119,6 +119,7 @@
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 (define-key my-keys-minor-mode-map [(super t)] 'find-tag)
 (define-key my-keys-minor-mode-map [(super b)] 'ibuffer)
+(define-key my-keys-minor-mode-map [(super f)] 'ns-toggle-fullscreen)
  (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " my-keys" 'my-keys-minor-mode-map)
