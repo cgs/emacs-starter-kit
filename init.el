@@ -86,6 +86,12 @@
 (server-start)
 (global-auto-revert-mode 1)
 
+;;longlines
+(add-to-list 'load-path "~/.emacs.d/vendor/longlines.el")
+(autoload 'longlines-mode
+  "longlines.el"
+  "Minor mode for automatically wrapping long lines." t)
+
 ;;textmate-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/textmate.el")
 (require 'textmate)
