@@ -120,6 +120,16 @@
 (require 'confluence)
 (setq confluence-url "http://confluence/rpc/xmlrpc")
 
+;;org mode
+(add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/lisp")
+(add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/contrib/lisp")
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+     (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+     (global-set-key "\C-cl" 'org-store-link)
+     (global-set-key "\C-ca" 'org-agenda)
+     (global-set-key "\C-cb" 'org-iswitchb)
+
 ;;minor mode for overriding bindings
 ;;TODO: put all custom bindings here
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
