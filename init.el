@@ -82,11 +82,19 @@
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y") ;;duplicate line
+(global-set-key (kbd "C-c k") 'clear-shell )
 (global-set-key "\C-cs" "\C-x3 \C-xb") ;;split vertically with previous buffer
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
 (global-set-key (kbd "<f5>") 'nav)
 (server-start)
 (global-auto-revert-mode 1)
+
+(defun clear-shell ()
+   (interactive)
+   (let ((old-max comint-buffer-maximum-size))
+     (setq comint-buffer-maximum-size 0)
+     (comint-truncate-buffer)
+     (setq comint-buffer-maximum-size old-max))) 
 
 ;;longlines
 (add-to-list 'load-path "~/.emacs.d/vendor/longlines.el")
