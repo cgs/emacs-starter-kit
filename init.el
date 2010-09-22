@@ -76,6 +76,8 @@
 (push "/usr/local/bin" exec-path)
 (push "/bin" exec-path)
 (push "/usr/bin" exec-path)
+(push "/usr/local/git/bin" exec-path)
+(setenv "PATH" (concat "/bin:/usr/bin:" (getenv "PATH")))
 
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
@@ -121,7 +123,7 @@
 (setq confluence-url "http://confluence/rpc/xmlrpc")
 
 ;;magit
-(add-to-list 'load-path "~/.emacs.d/vendor/magit-0.8.2")
+(add-to-list 'load-path "~/.emacs.d/vendor/magit")
 (require 'magit)
 
 ;;org mode
