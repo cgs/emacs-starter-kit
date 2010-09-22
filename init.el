@@ -123,7 +123,7 @@
 (setq confluence-url "http://confluence/rpc/xmlrpc")
 
 ;;magit
-(add-to-list 'load-path "~/.emacs.d/vendor/magit")
+(add-to-list 'load-path "~/.emacs.d/vendor/magit-0.8.2")
 (require 'magit)
 
 ;;org mode
