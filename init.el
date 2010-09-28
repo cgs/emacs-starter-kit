@@ -158,4 +158,7 @@
   (my-keys-minor-mode 0))
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
+(add-to-list 'load-path "~/.emacs.d/vendor/grep-hack")
+(load "grep-hack.el")
+
 ;;; init.el ends here
