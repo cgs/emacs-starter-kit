@@ -85,7 +85,7 @@
 (global-set-key (kbd "C-c k") 'clear-shell )
 (global-set-key "\C-cs" "\C-x3 \C-xb") ;;split vertically with previous buffer
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
-(global-set-key (kbd "<f5>") 'nav)
+(global-set-key (kbd "<f5>") 'speedbar)
 (server-start)
 (global-auto-revert-mode 1)
 
@@ -121,9 +121,21 @@
                            "~/.emacs.d/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
 
-;;emacs-nav
-(add-to-list 'load-path "~/.emacs.d/vendor/emacs-nav")
-(require 'nav)
+;;window-number-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/window-number")
+(autoload 'window-number-mode "window-number"
+  "A global minor mode that enables selection of windows according to
+numbers with the C-x C-j prefix.  Another mode,
+`window-number-meta-mode' enables the use of the M- prefix."
+  t)
+(window-number-mode 1)
+
+(autoload 'window-number-meta-mode "window-number"
+  "A global minor mode that enables use of the M- prefix to select
+windows, use `window-number-mode' to display the window numbers in
+the mode-line."
+  t)
+(window-number-meta-mode 1)
 
 ;;confluence.el
 (add-to-list 'load-path "~/.emacs.d/vendor/confluence")
