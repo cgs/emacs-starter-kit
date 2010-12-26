@@ -85,7 +85,7 @@
 (global-set-key (kbd "C-c k") 'clear-shell )
 (global-set-key "\C-cs" "\C-x3 \C-xb") ;;split vertically with previous buffer
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
-(global-set-key (kbd "<f5>") 'speedbar)
+(global-set-key (kbd "<f5>") 'nav)
 (server-start)
 (global-auto-revert-mode 1)
 
@@ -112,6 +112,10 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
+;;haml-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/haml-mode.el")
+(require 'haml-mode)
+
 ;;yasnippet
 (add-to-list 'load-path
               "~/.emacs.d/vendor/yasnippet-0.6.1c")
@@ -120,6 +124,10 @@
 (setq yas/root-directory '("~/.emacs.d/vendor/yasnippet-0.6.1c/snippets"
                            "~/.emacs.d/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
+
+;;emacs-nav
+(add-to-list 'load-path "~/.emacs.d/vendor/nav.el")
+(require 'nav)
 
 ;;window-number-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/window-number")
@@ -173,4 +181,13 @@ the mode-line."
 (add-to-list 'load-path "~/.emacs.d/vendor/grep-hack")
 (load "grep-hack.el")
 
+(put 'dired-find-alternate-file 'disabled nil)
+(add-hook 'dired-mode-hook
+ (lambda ()
+  (define-key dired-mode-map (kbd "<return>")
+    'dired-find-alternate-file) ; was dired-advertised-find-file
+  (define-key dired-mode-map (kbd "^")
+    (lambda () (interactive) (find-alternate-file "..")))
+  ; was dired-up-directory
+  ))
 ;;; init.el ends here
