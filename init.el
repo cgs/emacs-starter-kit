@@ -96,6 +96,17 @@
      (comint-truncate-buffer)
      (setq comint-buffer-maximum-size old-max))) 
 
+;; ibuffer customizations.
+;; organize buffers into groups.
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("other" (or
+                         (name . "^\\*")))
+               ))))
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
+
 ;;longlines
 (add-to-list 'load-path "~/.emacs.d/vendor/longlines.el")
 (autoload 'longlines-mode
