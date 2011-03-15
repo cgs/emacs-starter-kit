@@ -101,6 +101,7 @@
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("other" (or
+                         (name . "\\.org$")
                          (name . "^\\*")))
                ))))
 (add-hook 'ibuffer-mode-hook
@@ -126,6 +127,13 @@
 ;;haml-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/haml-mode.el")
 (require 'haml-mode)
+
+;;less-css-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/less-css-mode.el")
+(autoload 'less-css-mode
+  "less-css-mode.el"
+  "Major mode for LESS css" t)
+(add-to-list 'auto-mode-alist '("\\.less$" . less-css-mode))
 
 ;;yasnippet
 (add-to-list 'load-path
