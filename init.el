@@ -164,11 +164,6 @@ the mode-line."
   t)
 (window-number-meta-mode 1)
 
-;;confluence.el
-(add-to-list 'load-path "~/.emacs.d/vendor/confluence")
-(require 'confluence)
-(setq confluence-url "http://confluence/rpc/xmlrpc")
-
 ;;magit
 (add-to-list 'load-path "~/.emacs.d/vendor/magit-0.8.2")
 (require 'magit)
