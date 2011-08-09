@@ -128,6 +128,17 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/haml-mode.el")
 (require 'haml-mode)
 
+;;coffee-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
+(require 'coffee-mode)
+
+(defun coffee-custom ()
+  "coffee-mode-hook"
+ (set (make-local-variable 'tab-width) 2))
+
+(add-hook 'coffee-mode-hook
+  '(lambda() (coffee-custom)))
+
 ;;less-css-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/less-css-mode.el")
 (autoload 'less-css-mode
@@ -177,6 +188,11 @@ the mode-line."
      (global-set-key "\C-cl" 'org-store-link)
      (global-set-key "\C-ca" 'org-agenda)
      (global-set-key "\C-cb" 'org-iswitchb)
+
+(org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . nil)
+        (ruby . t)))
 
 ;;minor mode for overriding bindings
 ;;TODO: put all custom bindings here
