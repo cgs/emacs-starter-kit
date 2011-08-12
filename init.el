@@ -89,6 +89,8 @@
 (server-start)
 (global-auto-revert-mode 1)
 
+(setq initial-major-mode 'org-mode)
+
 (defun clear-shell ()
    (interactive)
    (let ((old-max comint-buffer-maximum-size))
@@ -184,10 +186,13 @@ the mode-line."
 (add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/contrib/lisp")
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-     (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
-     (global-set-key "\C-cl" 'org-store-link)
-     (global-set-key "\C-ca" 'org-agenda)
-     (global-set-key "\C-cb" 'org-iswitchb)
+(add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+;;http://orgmode.org/manual/Conflicts.html
+;;setting so that shift-arrow keys move between frames
+(setq org-replace-disputed-keys t)
 
 (org-babel-do-load-languages
       'org-babel-load-languages
