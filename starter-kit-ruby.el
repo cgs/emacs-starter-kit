@@ -23,6 +23,7 @@
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rule$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.thor$" . ruby-mode))
 
 ;; We never want to edit Rubinius bytecode
 (add-to-list 'completion-ignored-extensions ".rbc")
@@ -72,7 +73,7 @@ exec-to-string command, but it works and seems fast"
               (local-file (file-relative-name
                            temp-file
                            (file-name-directory buffer-file-name))))
-         (list "ruby" (list "-c" local-file))))
+         (list "/Users/csepic/.rvm/rubies/ruby-1.9.2-p290/bin/ruby" (list "-c" local-file))))
 
      (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
      (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)

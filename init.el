@@ -72,12 +72,16 @@
 (if (file-exists-p user-specific-config) (load user-specific-config))
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
-
-(push "/usr/local/bin" exec-path)
-(push "/bin" exec-path)
-(push "/usr/bin" exec-path)
-(push "/usr/local/git/bin" exec-path)
-(setenv "PATH" (concat "/bin:/usr/bin:" (getenv "PATH")))
+ 
+;; (push "/usr/local/bin" exec-path)
+;; (push "/bin" exec-path)
+;; (push "/usr/bin" exec-path)
+;; (push "/usr/local/git/bin" exec-path)
+;; (setenv "PATH" (concat "/bin:/usr/bin:" (getenv "PATH")))
+;; read in PATH from .bashrc
+(if (not (getenv "TERM_PROGRAM"))
+    (setenv "PATH"
+            (shell-command-to-string "source $HOME/.zshrc && printf $PATH")))
 
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
@@ -85,7 +89,7 @@
 (global-set-key (kbd "C-c k") 'clear-shell )
 (global-set-key "\C-cs" "\C-x3 \C-xb") ;;split vertically with previous buffer
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
-(global-set-key (kbd "<f5>") 'nav)
+;; (global-set-key (kbd "<f5>") 'nav)
 (server-start)
 (global-auto-revert-mode 1)
 
@@ -100,6 +104,7 @@
 
 ;; ibuffer customizations.
 ;; organize buffers into groups.
+(setq ibuffer-expert t)
 (setq ibuffer-saved-filter-groups
       (quote (("default"
                ("other" (or
@@ -120,6 +125,14 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/textmate.el")
 (require 'textmate)
 (textmate-mode)
+
+;;rvm
+(add-to-list 'load-path "~/.emacs.d/vendor/rvm.el")
+(require 'rvm)
+
+;;rspec-mode
+(add-to-list 'load-path "~/.emacs.d/vendor/rspec-mode.el")
+(require 'rspec-mode)
 
 ;;yaml-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/yaml-mode.el")
@@ -180,6 +193,13 @@ the mode-line."
 ;;magit
 (add-to-list 'load-path "~/.emacs.d/vendor/magit-0.8.2")
 (require 'magit)
+
+;;anything
+(add-to-list 'load-path "~/.emacs.d/vendor/anything")
+
+(require 'anything-match-plugin)
+(require 'anything-config)
+
 
 ;;org mode
 (add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/lisp")
