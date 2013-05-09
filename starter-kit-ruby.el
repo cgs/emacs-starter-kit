@@ -73,7 +73,7 @@ exec-to-string command, but it works and seems fast"
               (local-file (file-relative-name
                            temp-file
                            (file-name-directory buffer-file-name))))
-         (list "/Users/csepic/.rvm/rubies/ruby-1.9.2-p290/bin/ruby" (list "-c" local-file))))
+         (list "ruby" (list "-c" local-file))))
 
      (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
      (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)

@@ -73,15 +73,14 @@
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
  
-;; (push "/usr/local/bin" exec-path)
-;; (push "/bin" exec-path)
-;; (push "/usr/bin" exec-path)
-;; (push "/usr/local/git/bin" exec-path)
-;; (setenv "PATH" (concat "/bin:/usr/bin:" (getenv "PATH")))
 ;; read in PATH from .bashrc
 (if (not (getenv "TERM_PROGRAM"))
     (setenv "PATH"
             (shell-command-to-string "source $HOME/.zshrc && printf $PATH")))
+
+;; set rbenv path
+(setenv "PATH" (concat (getenv "HOME") "/.rbenv/shims:" (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
+(setq exec-path (cons (concat (getenv "HOME") "/.rbenv/shims") (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
 
 (set-default 'truncate-lines t)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
@@ -89,10 +88,10 @@
 (global-set-key (kbd "C-c k") 'clear-shell )
 (global-set-key "\C-cs" "\C-x3 \C-xb") ;;split vertically with previous buffer
 (global-set-key (kbd "<f6>") "\C-xb") ;;go to last buffer
-;; (global-set-key (kbd "<f5>") 'nav)
+(global-set-key (kbd "<f8>") 'nav)
+(global-set-key (kbd "<f7>") 'anything-for-projects)
 (server-start)
 (global-auto-revert-mode 1)
-
 (setq initial-major-mode 'org-mode)
 
 (defun clear-shell ()
@@ -126,10 +125,6 @@
 (require 'textmate)
 (textmate-mode)
 
-;;rvm
-(add-to-list 'load-path "~/.emacs.d/vendor/rvm.el")
-(require 'rvm)
-
 ;;rspec-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/rspec-mode.el")
 (require 'rspec-mode)
@@ -142,6 +137,10 @@
 ;;haml-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/haml-mode.el")
 (require 'haml-mode)
+
+;;sass mode
+(add-to-list 'load-path "~/.emacs.d/vendor/sass-mode")
+(require 'sass-mode)
 
 ;;coffee-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/coffee-mode")
@@ -174,6 +173,10 @@
 (add-to-list 'load-path "~/.emacs.d/vendor/nav.el")
 (require 'nav)
 
+;;http://orgmode.org/manual/Conflicts.html
+;;setting so that shift-arrow keys move between frames
+(setq org-replace-disputed-keys t)
+
 ;;window-number-mode
 (add-to-list 'load-path "~/.emacs.d/vendor/window-number")
 (autoload 'window-number-mode "window-number"
@@ -200,7 +203,6 @@ the mode-line."
 (require 'anything-match-plugin)
 (require 'anything-config)
 
-
 ;;org mode
 (add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/lisp")
 (add-to-list 'load-path "~/.emacs.d/vendor/org-7.01h/contrib/lisp")
@@ -210,14 +212,22 @@ the mode-line."
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-;;http://orgmode.org/manual/Conflicts.html
-;;setting so that shift-arrow keys move between frames
-(setq org-replace-disputed-keys t)
 
 (org-babel-do-load-languages
       'org-babel-load-languages
       '((emacs-lisp . nil)
         (ruby . t)))
+
+;;highlight ruby 1.9 hashes
+(font-lock-add-keywords
+ 'ruby-mode
+ '(("\\(\\b\\sw[_a-zA-Z0-9]*:\\)\\(?:\\s-\\|$\\)" (1 font-lock-constant-face))))
+
+(defun spin-push ()
+  (interactive)
+  (shell-command 
+   (format "bundle exec spin push %s" 
+       (shell-quote-argument (buffer-file-name)))))
 
 ;;minor mode for overriding bindings
 ;;TODO: put all custom bindings here
@@ -225,6 +235,7 @@ the mode-line."
 (define-key my-keys-minor-mode-map [(super t)] 'find-tag)
 (define-key my-keys-minor-mode-map [(super b)] 'ibuffer)
 (define-key my-keys-minor-mode-map [(super f)] 'ns-toggle-fullscreen)
+(define-key my-keys-minor-mode-map [(super i)] 'spin-push)
  (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " my-keys" 'my-keys-minor-mode-map)
